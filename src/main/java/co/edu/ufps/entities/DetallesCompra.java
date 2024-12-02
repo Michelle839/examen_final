@@ -16,10 +16,10 @@ public class DetallesCompra {
     @Column(name="cantidad", nullable = false)
     private Integer cantidad;
 
-    @Column(name="precio", nullable = false, precision = 10, scale = 2)
+    @Column(name="precio", nullable = false)
     private Double precio;
 
-    @Column(name="descuento", precision = 5, scale = 2)
+    @Column(name="descuento")
     private Double descuento;
     
     @ManyToOne

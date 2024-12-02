@@ -14,12 +14,12 @@ public class Pago {
     private Integer id;
 
     @Column(name="tarjeta_tipo",length = 20)
-    private String tarjeta_tipo;
+    private String tarjetaTipo;
     
     @Column(name = "cuotas")
     private Integer cuotas;
 
-    @Column(name="valor",precision = 10, scale = 2)
+    @Column(name="valor")
     private Double valor;
     
     @ManyToOne

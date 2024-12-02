@@ -22,10 +22,10 @@ public class Producto {
     @Column(name="descripcion",length = 1000)
     private String descripcion;
 
-    @Column(name="precio",nullable = false, precision = 10, scale = 2)
+    @Column(name="precio",nullable = false)
     private Double precio;
 
-    @Column(name="cantidad",nullable = false, columnDefinition = "int default 0")
+    @Column(name="cantidad",nullable = false)
     private Integer cantidad;
 
     @Column(name="referencia",length = 20)

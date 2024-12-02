@@ -20,10 +20,10 @@ public class Compra {
     @Column(name="id")
     private Integer id; 
 
-    @Column(name="total",precision = 10, scale = 2)
+    @Column(name="total")
     private Double total;
 
-    @Column(name="impuestos",precision = 5, scale = 2)
+    @Column(name="impuestos")
     private Double impuestos;
 
     @Column(name="fecha",nullable = false)
