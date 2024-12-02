@@ -14,6 +14,7 @@ import co.edu.ufps.entities.Producto;
 import co.edu.ufps.entities.Tienda;
 import co.edu.ufps.entities.TipoDocumento;
 import co.edu.ufps.entities.TipoPago;
+import co.edu.ufps.entities.Vendedor;
 import co.edu.ufps.repositories.CajeroRepository;
 import co.edu.ufps.repositories.ClienteRepository;
 import co.edu.ufps.repositories.CompraRepository;
@@ -21,6 +22,7 @@ import co.edu.ufps.repositories.DetallesCompraRepository;
 import co.edu.ufps.repositories.PagoRepository;
 import co.edu.ufps.repositories.ProductoRepository;
 import co.edu.ufps.repositories.TiendaRepository;
+import co.edu.ufps.repositories.VendedorRepository;
 import co.edu.ufps.repositories.TipoDocumentoRepository;
 import co.edu.ufps.repositories.TipoPagoRepository;
 import jakarta.transaction.Transactional;
@@ -58,6 +60,8 @@ public class CompraService {
     @Autowired
     private CajeroRepository cajeroRepository;
     
+    @Autowired
+    private VendedorRepository vendedorRepository;
     
     @Autowired
     private TipoPagoRepository tipoPagoRepository;
@@ -71,6 +75,27 @@ public class CompraService {
         if (tienda == null) {
             return new RespuestaBase("error", "Tienda no encontrada", null);
         }
+     
+        Cajero cajero = null;
+        if (request.getCajero() != null && request.getCajero().getToken() != null) {
+            cajero = cajeroRepository.findByToken(request.getCajero().getToken());
+            if (cajero == null) {
+                return new RespuestaBase("error", "Cajero no encontrado", null);
+            }
+        } else {
+            return new RespuestaBase("error", "Token de cajero es requerido", null);
+        }
+        
+        Optional<Vendedor> vendedorOptional = vendedorRepository
+                .findByDocumento(request.getVendedor().getDocumento());  // Buscar por documento del vendedor
+
+            if (!vendedorOptional.isPresent()) {
+                return new RespuestaBase("error", "Vendedor no encontrado", null);
+            }
+
+            Vendedor vendedor = vendedorOptional.get();
+        
+
         
         Optional<TipoDocumento> tipoDocumentoOptional = tipoDocumentoRepository
             .findByNombre(request.getCliente().getTipoDocumento());
@@ -93,10 +118,8 @@ public class CompraService {
             cliente.setTipoDocumento(tipoDocumento);
             clienteRepository.save(cliente);
         }
-        Cajero cajero = cajeroRepository.findByToken(request.getCajero().getToken()).orElse(null);
-        if (cajero == null) {
-            return new RespuestaBase("error", "Cajero no encontrado", null);
-        }
+        
+
 
         // Crear la compra
         Compra compra = new Compra();
@@ -104,12 +127,13 @@ public class CompraService {
         compra.setTienda(tienda);
         compra.setFecha(LocalDateTime.now());  // Usar la fecha y hora actual
         compra.setImpuestos(request.getImpuesto());
+        compra.setCajero(cajero); 
+        compra.setVendedor(vendedor);
 
-        // Calcular el total de la compra
         double total = calcularTotal(request.getProductos(), request.getImpuesto());
         compra.setTotal(total);
 
-        compraRepository.save(compra);  // Guardar la compra
+        compraRepository.save(compra); 
 
         // Crear los detalles de la compra
         for (ProductoRequest productoRequest : request.getProductos()) {
@@ -144,8 +168,11 @@ public class CompraService {
             pago.setTarjetaTipo(medioPagoRequest.getTipoTarjeta());
             pago.setCuotas(medioPagoRequest.getCuotas());
             pago.setValor(medioPagoRequest.getValor());
+            pago.setCompra(compra); // Asignar la relación con la compra
+
             pagoRepository.save(pago);
         }
+
 
         RespuestaFactura respuestaFactura = new RespuestaFactura(
         	    String.valueOf(compra.getId()),  // El número de factura

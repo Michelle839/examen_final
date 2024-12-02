@@ -18,7 +18,6 @@ public class CompraController {
     @PostMapping("/factura")
     @ResponseStatus(HttpStatus.CREATED)  // Status 201 cuando la compra es exitosa
     public RespuestaBase crearFactura(@RequestBody CompraRequest request, @RequestParam String uuidTienda) {
-        // Llamar al servicio para procesar la compra
         return compraService.procesarCompra(uuidTienda, request);
     }
 }
