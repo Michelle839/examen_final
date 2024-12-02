@@ -9,4 +9,7 @@ public class RespuestaFactura {
     private String numero;
     private double total;
     private String fecha;
+    
+    
+    
 }
