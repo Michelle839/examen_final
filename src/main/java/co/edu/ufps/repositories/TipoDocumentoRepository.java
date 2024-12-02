@@ -1,14 +1,10 @@
 package co.edu.ufps.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
 import co.edu.ufps.entities.TipoDocumento;
-import co.edu.ufps.entities.Compra;
+import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
 
-@Repository
-public interface TipoDocumentoRepository extends JpaRepository<TipoDocumento,Integer>{
+public interface TipoDocumentoRepository extends JpaRepository<TipoDocumento, Integer> {
+    Optional<TipoDocumento> findByNombre(String nombre);
 }
-
-

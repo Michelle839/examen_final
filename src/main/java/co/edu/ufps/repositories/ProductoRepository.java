@@ -1,14 +1,10 @@
 package co.edu.ufps.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
 import co.edu.ufps.entities.Producto;
-import co.edu.ufps.entities.Compra;
+import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
 
-@Repository
-public interface ProductoRepository extends JpaRepository<Producto,Integer>{
+public interface ProductoRepository extends JpaRepository<Producto, Integer> {
+    Optional<Producto> findByReferencia(String referencia);
 }
-
-
