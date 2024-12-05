@@ -7,9 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class RespuestaFactura {
     private String numero;
-    private double total;
+    private String total;
     private String fecha;
-    
-    
-    
+       
 }

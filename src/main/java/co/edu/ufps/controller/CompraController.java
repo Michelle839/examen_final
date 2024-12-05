@@ -8,15 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/compra")
+@RequestMapping("/compra")
 public class CompraController {
 
     @Autowired
     private CompraService compraService;
 
-    // Endpoint para procesar la compra
-    @PostMapping("/factura")
-    @ResponseStatus(HttpStatus.CREATED)  // Status 201 cuando la compra es exitosa
+    @PostMapping("/crear")
+    @ResponseStatus(HttpStatus.CREATED) 
     public RespuestaBase crearFactura(@RequestBody CompraRequest request, @RequestParam String uuidTienda) {
         return compraService.procesarCompra(uuidTienda, request);
     }

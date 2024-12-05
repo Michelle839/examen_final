@@ -4,15 +4,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class MedioPagoRequest {
+public class PagoRequest {
 
     @JsonProperty("tipo_pago")
     private String tipoPago;
 
     @JsonProperty("tipo_tarjeta")
     private String tipoTarjeta;
+    
+    private Integer cuotas;
 
-    private double valor;
+    private Double valor;
 
-    private int cuotas;
+   
 }

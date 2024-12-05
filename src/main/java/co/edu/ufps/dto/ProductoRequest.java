@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class ProductoRequest {
     private String referencia;
-    private int cantidad;
-    private double descuento;
+    private Integer cantidad;
+    private Double descuento;
 }

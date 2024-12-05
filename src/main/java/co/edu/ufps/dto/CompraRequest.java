@@ -14,9 +14,9 @@ public class CompraRequest {
 
     @JsonProperty("productos")
     private List<ProductoRequest> productos;
-
+    
     @JsonProperty("medios_pago")
-    private List<MedioPagoRequest> mediosPago;
+    private List<PagoRequest> pagos;
 
     @JsonProperty("vendedor")
     private VendedorRequest vendedor;
@@ -24,3 +24,4 @@ public class CompraRequest {
     @JsonProperty("cajero")
     private CajeroRequest cajero;
 }
+
