@@ -5,6 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Data
 @Entity
@@ -26,7 +27,6 @@ public class Tienda {
     private String uuid;
 
     @OneToMany(mappedBy = "tienda", cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<Cajero> cajeros;
 
     @OneToMany(mappedBy = "tienda", cascade = CascadeType.ALL)
